@@ -1,0 +1,8 @@
+Flask
+Flask-Cors
+Flask-SocketIO
+pymongo
+redis
+requests
+PyJWT
+python-dotenv
