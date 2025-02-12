@@ -1,25 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { LineChart, Line, XAxis, YAxis, Tooltip } from "recharts";
+import { fetchData } from "/Users/arsalankhan/Desktop/StocksApp/frontend/src/services/api";
 
-const Dashboard = () => {
-  const [stockData, setStockData] = useState([]);
+const Dashboard: React.FC = () => {
+  const [data, setData] = useState<any>(null);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/prices`)
-      .then((res) => res.json())
-      .then((data) => setStockData(data))
-      .catch(console.error);
+    const getData = async () => {
+      const result = await fetchData();
+      setData(result);
+    };
+    getData();
   }, []);
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold">Stock Prices</h1>
-      <LineChart width={600} height={300} data={stockData}>
-        <XAxis dataKey="time" />
-        <YAxis />
-        <Tooltip />
-        <Line type="monotone" dataKey="price" stroke="#8884d8" />
-      </LineChart>
+    <div className="p-8">
+      <h2 className="text-2xl font-bold">Dashboard</h2>
+      <pre className="mt-4 p-4 bg-gray-200 rounded">{JSON.stringify(data, null, 2)}</pre>
     </div>
   );
 };
