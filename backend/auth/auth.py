@@ -1,9 +1,13 @@
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+SECRET_KEY = os.getenv('SECRET_KEY', 'default_secret_key')
+
+# JWT Authentication Fixes
 import jwt
 import datetime
 from flask import request, jsonify
-from backend.config import config
-
-SECRET_KEY = config.SECRET_KEY
 
 def generate_token(user_id):
     """Generates a JWT token with user_id and expiration time."""
@@ -29,10 +33,8 @@ def authenticate():
         return jsonify({"error": "Missing or malformed token"}), 401
 
     token = auth_header.split("Bearer ")[1]
-    
-    # 🔹 Ensure verify_token() is actually called
     decoded_token = verify_token(token)
-    
+
     if "error" in decoded_token:
         return jsonify(decoded_token), 403
 

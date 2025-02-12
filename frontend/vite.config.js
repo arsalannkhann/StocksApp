@@ -11,5 +11,8 @@ export default defineConfig({
         main: './src/main.tsx'  // Adjust path to your main entry file
       }
     }
+  },
+  optimizeDeps: {
+    include: ['recharts']
   }
 });
