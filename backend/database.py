@@ -1,21 +1,17 @@
 from pymongo import MongoClient
-from config import config
+import os
+from redis import Redis
+from dotenv import load_dotenv
 
-db_client = MongoClient(config.MONGO_URI)
-db = db_client.get_database()
+load_dotenv()
 
-def init_db():
-    try:
-        # Example of initializing collections
-        if 'stocks' not in db.list_collection_names():
-            db.create_collection('stocks')
-        if 'users' not in db.list_collection_names():
-            db.create_collection('users')
-        
-        print("Database connected and collections initialized successfully!")
-    except Exception as e:
-        print(f"An error occurred: {e}")
+class Database:
+    def __init__(self):
+        self.client = MongoClient(os.getenv("MONGO_URI"))
+        self.db = self.client.stock_database
+        self.redis = Redis.from_url(os.getenv("REDIS_URL"))
 
-def close_db():
-    db_client.close()
-    print("Database connection closed.")
+    def get_stock_data(self, symbol):
+        return self.db.stocks.find_one({"symbol": symbol})
+
+db = Database()

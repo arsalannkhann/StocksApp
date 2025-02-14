@@ -1,17 +1,24 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import AuthProvider from "./contexts/AuthContext";
 import Dashboard from "./pages/Dashboard";
-import Home from "/Users/arsalankhan/Desktop/StocksApp/frontend/src/pages/Home";
-import NotFound from "/Users/arsalankhan/Desktop/StocksApp/frontend/src/pages/NotFound";
+import LoginPage from "./pages/LoginPage";
+import ProtectedRoute from "/Users/arsalankhan/Desktop/StocksApp/frontend/src/utils/ProtectedRoute";
 
-const App: React.FC = () => {
+function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Route>
+          <Route path="/" element={<Navigate to="/dashboard" />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
-};
+}
 
 export default App;
