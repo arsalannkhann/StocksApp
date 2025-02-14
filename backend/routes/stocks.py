@@ -1,14 +1,14 @@
 from flask import Blueprint, request, jsonify
-from utils.auth_utils import token_required
-from models.llama2_model import Llama2Model
+from backend.utils.auth_utils import login_required
+
 import requests
 import os
 from datetime import datetime
-
+from backend.models.llama2_model import  Llama2Model
 stocks_bp = Blueprint("stocks", __name__)
 
 @stocks_bp.route("/analyze", methods=["GET"])
-@token_required
+@login_required
 
 
 def get_stock_data(symbol: str) -> dict:
