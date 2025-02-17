@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      "@": path.resolve(__dirname, "/Users/arsalankhan/Desktop/StocksApp/frontend/src"),
     },
   },
   server: {
@@ -19,4 +19,4 @@ export default defineConfig({
       },
     },
   },
-});
+});x
