@@ -1,10 +1,23 @@
 # utils/auth_utils.py
+from datetime import datetime, timedelta
 from functools import wraps
 from flask import request, jsonify
 import firebase_admin
 from firebase_admin import auth
 import jwt
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
+
+def generate_token(user_id: str) -> str:
+    secret_key = os.getenv("SECRET_KEY")
+    payload = {
+        "user_id": user_id,
+        "exp": datetime.utcnow() + timedelta(hours=1)
+    }
+    token = jwt.encode(payload, secret_key, algorithm="HS256")
+    return token
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
