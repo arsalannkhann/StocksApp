@@ -598,3 +598,13 @@ File Path                                PID    Runtime      # DAGs    # Errors 
 /opt/airflow/dags/news_sentiment_dag.py                           1           0  0.25s           2025-08-04T22:11:06
 /opt/airflow/dags/stock_data_dag.py                               1           0  0.16s           2025-08-04T22:11:06
 ================================================================================
+[2025-08-04T22:12:06.045+0000] {manager.py:879} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+---------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/llm_prediction_dag.py                           0           1  0.44s           2025-08-04T22:11:37
+/opt/airflow/dags/news_sentiment_dag.py                           1           0  0.24s           2025-08-04T22:11:37
+/opt/airflow/dags/stock_data_dag.py                               1           0  0.14s           2025-08-04T22:11:37
+================================================================================

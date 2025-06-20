@@ -387,3 +387,17 @@
 [2025-08-04T22:11:06.890+0000] {logging_mixin.py:188} INFO - [2025-08-04T22:11:06.889+0000] {dag.py:3033} INFO - Sync 1 DAGs
 [2025-08-04T22:11:06.926+0000] {logging_mixin.py:188} INFO - [2025-08-04T22:11:06.926+0000] {dag.py:3820} INFO - Setting next_dagrun for stock_data_dag to 2025-08-04T21:00:00+00:00, run_after=2025-08-04T22:00:00+00:00
 [2025-08-04T22:11:06.935+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/stock_data_dag.py took 0.146 seconds
+[2025-08-04T22:11:37.616+0000] {processor.py:161} INFO - Started process (PID=236) to work on /opt/airflow/dags/stock_data_dag.py
+[2025-08-04T22:11:37.616+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/stock_data_dag.py for tasks to queue
+[2025-08-04T22:11:37.617+0000] {logging_mixin.py:188} INFO - [2025-08-04T22:11:37.617+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/stock_data_dag.py
+[2025-08-04T22:11:37.689+0000] {processor.py:840} INFO - DAG(s) 'stock_data_dag' retrieved from /opt/airflow/dags/stock_data_dag.py
+[2025-08-04T22:11:37.704+0000] {logging_mixin.py:188} INFO - [2025-08-04T22:11:37.704+0000] {dag.py:3033} INFO - Sync 1 DAGs
+[2025-08-04T22:11:37.719+0000] {logging_mixin.py:188} INFO - [2025-08-04T22:11:37.719+0000] {dag.py:3820} INFO - Setting next_dagrun for stock_data_dag to 2025-08-04T21:00:00+00:00, run_after=2025-08-04T22:00:00+00:00
+[2025-08-04T22:11:37.727+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/stock_data_dag.py took 0.113 seconds
+[2025-08-04T22:12:08.353+0000] {processor.py:161} INFO - Started process (PID=252) to work on /opt/airflow/dags/stock_data_dag.py
+[2025-08-04T22:12:08.353+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/stock_data_dag.py for tasks to queue
+[2025-08-04T22:12:08.354+0000] {logging_mixin.py:188} INFO - [2025-08-04T22:12:08.353+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/stock_data_dag.py
+[2025-08-04T22:12:08.415+0000] {processor.py:840} INFO - DAG(s) 'stock_data_dag' retrieved from /opt/airflow/dags/stock_data_dag.py
+[2025-08-04T22:12:08.453+0000] {logging_mixin.py:188} INFO - [2025-08-04T22:12:08.453+0000] {dag.py:3033} INFO - Sync 1 DAGs
+[2025-08-04T22:12:08.470+0000] {logging_mixin.py:188} INFO - [2025-08-04T22:12:08.470+0000] {dag.py:3820} INFO - Setting next_dagrun for stock_data_dag to 2025-08-04T21:00:00+00:00, run_after=2025-08-04T22:00:00+00:00
+[2025-08-04T22:12:08.488+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/stock_data_dag.py took 0.137 seconds
