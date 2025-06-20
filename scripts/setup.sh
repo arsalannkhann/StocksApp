@@ -1,6 +1,4 @@
-#!/bin/bash
 
-# Production-Grade LLM Stock Prediction Platform Setup Script
 
 set -e
 

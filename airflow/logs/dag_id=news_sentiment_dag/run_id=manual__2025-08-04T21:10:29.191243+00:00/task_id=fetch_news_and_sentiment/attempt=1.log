@@ -1,0 +1,46 @@
+[2025-08-04T21:33:53.541+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: news_sentiment_dag.fetch_news_and_sentiment manual__2025-08-04T21:10:29.191243+00:00 [queued]>
+[2025-08-04T21:33:53.635+0000] {taskinstance.py:1957} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: news_sentiment_dag.fetch_news_and_sentiment manual__2025-08-04T21:10:29.191243+00:00 [queued]>
+[2025-08-04T21:33:53.639+0000] {taskinstance.py:2171} INFO - Starting attempt 1 of 2
+[2025-08-04T21:33:54.235+0000] {taskinstance.py:2192} INFO - Executing <Task(PythonOperator): fetch_news_and_sentiment> on 2025-08-04 21:10:29.191243+00:00
+[2025-08-04T21:33:54.519+0000] {standard_task_runner.py:60} INFO - Started process 239 to run task
+[2025-08-04T21:33:54.887+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'news_sentiment_dag', 'fetch_news_and_sentiment', 'manual__2025-08-04T21:10:29.191243+00:00', '--job-id', '7', '--raw', '--subdir', 'DAGS_FOLDER/news_sentiment_dag.py', '--cfg-path', '/tmp/tmpzky76cdy']
+[2025-08-04T21:33:55.827+0000] {standard_task_runner.py:88} INFO - Job 7: Subtask fetch_news_and_sentiment
+[2025-08-04T21:33:56.385+0000] {task_command.py:423} INFO - Running <TaskInstance: news_sentiment_dag.fetch_news_and_sentiment manual__2025-08-04T21:10:29.191243+00:00 [running]> on host 774479e86811
+[2025-08-04T21:33:56.777+0000] {taskinstance.py:2481} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='news_sentiment_dag' AIRFLOW_CTX_TASK_ID='fetch_news_and_sentiment' AIRFLOW_CTX_EXECUTION_DATE='2025-08-04T21:10:29.191243+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-08-04T21:10:29.191243+00:00'
+[2025-08-04T21:33:58.970+0000] {taskinstance.py:2699} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/requests/models.py", line 971, in json
+    return complexjson.loads(self.text, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/news_sentiment_dag.py", line 36, in fetch_news_and_sentiment
+    sentiment = response.json()
+                ^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/requests/models.py", line 975, in json
+    raise RequestsJSONDecodeError(e.msg, e.doc, e.pos)
+requests.exceptions.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+[2025-08-04T21:33:58.990+0000] {taskinstance.py:1138} INFO - Marking task as UP_FOR_RETRY. dag_id=news_sentiment_dag, task_id=fetch_news_and_sentiment, execution_date=20250804T211029, start_date=20250804T213353, end_date=20250804T213358
+[2025-08-04T21:33:59.004+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 7 for task fetch_news_and_sentiment (Expecting value: line 1 column 1 (char 0); 239)
+[2025-08-04T21:33:59.043+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2025-08-04T21:33:59.092+0000] {taskinstance.py:3281} INFO - 0 downstream tasks scheduled from follow-on schedule check

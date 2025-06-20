@@ -22,7 +22,7 @@ from services.data_fetcher import DataFetcher
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('FLASK_SECRET_KEY', 'dev-key-change-in-production')
 CORS(app, origins="*")
-socketio = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet')
+socketio = SocketIO(app, cors_allowed_origins="*", async_mode='threading')
 
 # Initialize services
 db_service = DatabaseService()

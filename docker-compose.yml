@@ -12,9 +12,14 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: password123
       MONGO_INITDB_DATABASE: stockprediction
     volumes:
-      - mongodb_data:/data/db
+      - mongodb_:/data/db
     networks:
       - stock_network
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   redis:
     image: redis:7.0-alpine
@@ -23,9 +28,32 @@ services:
     ports:
       - "6379:6379"
     volumes:
-      - redis_data:/data
+      - redis_:/data
     networks:
       - stock_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  postgres:
+    image: postgres:13
+    container_name: stock_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: airflow
+    volumes:
+      - postgres_:/var/lib/postgresql/data
+    networks:
+      - stock_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U airflow"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   airflow-webserver:
     build:
@@ -34,22 +62,56 @@ services:
     container_name: stock_airflow_webserver
     restart: always
     depends_on:
+      - postgres
       - mongodb
       - redis
     environment:
       - AIRFLOW__CORE__EXECUTOR=LocalExecutor
-      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=sqlite:////opt/airflow/airflow.db
-      - AIRFLOW__CORE__FERNET_KEY=your-fernet-key-here
-      - AIRFLOW__WEBSERVER__SECRET_KEY=your-secret-key-here
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
+      - AIRFLOW__CORE__FERNET_KEY=U5VCtFOHH6kHSAwXOMo7tx7hNFanxEKX3EttTByCQUM=
+      - AIRFLOW__WEBSERVER__SECRET_KEY=dzbbIEu3FMD0euFNahpTnQ
+      - ALPHA_VANTAGE_API_KEY=${ALPHA_VANTAGE_API_KEY}
+      - FINNHUB_API_KEY=${FINNHUB_API_KEY}
+      - HF_TOKEN=${HF_TOKEN}
+      - _AIRFLOW_WWW_USER_USERNAME=admin
+      - _AIRFLOW_WWW_USER_PASSWORD=admin123
     ports:
       - "8080:8080"
     volumes:
       - ./airflow/dags:/opt/airflow/dags
       - ./airflow/logs:/opt/airflow/logs
       - ./airflow/plugins:/opt/airflow/plugins
+      - ./.env:/opt/airflow/.env
+      - ./backend/ml_models:/opt/airflow/ml_models
     networks:
       - stock_network
-
+    command: >
+      bash -c "
+        airflow db init &&
+        airflow users create --username admin --firstname Admin --lastname User --role Admin --email admin@example.com --password admin123 &&
+        airflow webserver --port 8080
+      "
+  airflow-scheduler:
+    build:
+      context: ./airflow
+      dockerfile: Dockerfile
+    container_name: stock_airflow_scheduler
+    restart: always
+    depends_on:
+      - postgres
+      - mongodb
+      - redis
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./airflow/logs:/opt/airflow/logs
+      - ./airflow/plugins:/opt/airflow/plugins
+      - ./backend/ml_models:/opt/airflow/ml_models
+    networks:
+      - stock_network
+    command: "airflow scheduler"
   flask-api:
     build:
       context: ./backend
@@ -61,10 +123,14 @@ services:
     environment:
       - MONGO_URI=mongodb://root:password123@mongodb:27017/stockprediction?authSource=admin
       - REDIS_URL=redis://redis:6379
-      - FLASK_ENV=development
+      - ALPHA_VANTAGE_API_KEY=${ALPHA_VANTAGE_API_KEY}
+      - FINNHUB_API_KEY=${FINNHUB_API_KEY}
+      - HF_TOKEN=${HF_TOKEN}
+      - FLASK_SECRET_KEY=${FLASK_SECRET_KEY}
     depends_on:
       - mongodb
       - redis
+      - airflow-webserver
     volumes:
       - ./backend:/app
       - ./ml_models:/app/ml_models
@@ -78,10 +144,7 @@ services:
     container_name: stock_react_frontend
     restart: always
     ports:
-      - "3000:3000"
-    environment:
-      - REACT_APP_API_URL=http://localhost:5000
-      - REACT_APP_WS_URL=http://localhost:5000
+      - "3000:80"
     depends_on:
       - flask-api
     networks:
@@ -95,7 +158,7 @@ services:
       - "9090:9090"
     volumes:
       - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
-      - prometheus_data:/prometheus
+      - prometheus_:/prometheus
     networks:
       - stock_network
 
@@ -108,17 +171,16 @@ services:
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=admin123
     volumes:
-      - grafana_data:/var/lib/grafana
-      - ./monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards
-      - ./monitoring/grafana/datasources:/etc/grafana/provisioning/datasources
+      - grafana_:/var/lib/grafana
     networks:
       - stock_network
 
 volumes:
-  mongodb_data:
-  redis_data:
-  prometheus_data:
-  grafana_data:
+  mongodb_:
+  redis_:
+  postgres_:
+  prometheus_:
+  grafana_:
 
 networks:
   stock_network:

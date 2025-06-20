@@ -1,0 +1,5 @@
+Frontend Dashboard: http://localhost:3000"
+echo "🔧 Airflow UI: http://localhost:8080 (admin/admin123)"
+echo "📈 Grafana: http://localhost:3001 (admin/admin123)"
+echo "🔍 Prometheus: http://localhost:9090"
+echo "🌐 API Health: http://localhost:5000/api/health"
