@@ -222,3 +222,17 @@
 [2025-08-05T08:28:52.183+0000] {logging_mixin.py:188} INFO - [2025-08-05T08:28:52.182+0000] {dag.py:3033} INFO - Sync 1 DAGs
 [2025-08-05T08:28:52.247+0000] {logging_mixin.py:188} INFO - [2025-08-05T08:28:52.247+0000] {dag.py:3820} INFO - Setting next_dagrun for news_sentiment_dag to 2025-08-05T08:00:00+00:00, run_after=2025-08-05T08:15:00+00:00
 [2025-08-05T08:28:52.295+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/news_sentiment_dag.py took 0.631 seconds
+[2025-08-05T08:29:23.223+0000] {processor.py:161} INFO - Started process (PID=1079) to work on /opt/airflow/dags/news_sentiment_dag.py
+[2025-08-05T08:29:23.224+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/news_sentiment_dag.py for tasks to queue
+[2025-08-05T08:29:23.227+0000] {logging_mixin.py:188} INFO - [2025-08-05T08:29:23.227+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/news_sentiment_dag.py
+[2025-08-05T08:29:23.371+0000] {processor.py:840} INFO - DAG(s) 'news_sentiment_dag' retrieved from /opt/airflow/dags/news_sentiment_dag.py
+[2025-08-05T08:29:23.412+0000] {logging_mixin.py:188} INFO - [2025-08-05T08:29:23.412+0000] {dag.py:3033} INFO - Sync 1 DAGs
+[2025-08-05T08:29:23.429+0000] {logging_mixin.py:188} INFO - [2025-08-05T08:29:23.429+0000] {dag.py:3820} INFO - Setting next_dagrun for news_sentiment_dag to 2025-08-05T08:00:00+00:00, run_after=2025-08-05T08:15:00+00:00
+[2025-08-05T08:29:23.439+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/news_sentiment_dag.py took 0.222 seconds
+[2025-08-05T08:29:54.019+0000] {processor.py:161} INFO - Started process (PID=1095) to work on /opt/airflow/dags/news_sentiment_dag.py
+[2025-08-05T08:29:54.022+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/news_sentiment_dag.py for tasks to queue
+[2025-08-05T08:29:54.025+0000] {logging_mixin.py:188} INFO - [2025-08-05T08:29:54.024+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/news_sentiment_dag.py
+[2025-08-05T08:29:54.151+0000] {processor.py:840} INFO - DAG(s) 'news_sentiment_dag' retrieved from /opt/airflow/dags/news_sentiment_dag.py
+[2025-08-05T08:29:54.183+0000] {logging_mixin.py:188} INFO - [2025-08-05T08:29:54.183+0000] {dag.py:3033} INFO - Sync 1 DAGs
+[2025-08-05T08:29:54.202+0000] {logging_mixin.py:188} INFO - [2025-08-05T08:29:54.202+0000] {dag.py:3820} INFO - Setting next_dagrun for news_sentiment_dag to 2025-08-05T08:00:00+00:00, run_after=2025-08-05T08:15:00+00:00
+[2025-08-05T08:29:54.211+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/news_sentiment_dag.py took 0.196 seconds
